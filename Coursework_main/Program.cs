@@ -82,15 +82,17 @@ namespace Coursework_main
             {
                 using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
                 {
+                    int lineNumbers = 0;
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
                         if (OneRecord.IsRecordCanBeCreated(line))
                         {
+                            lineNumbers++;
                             OneRecord record = new OneRecord(line);
-                            richTextBox1.Text += record.logString + '\n';
+                            richTextBox1.Text += String.Format("[{0}]    {1}\n",lineNumbers,record.logString);
                             //richTextBox1.AppendText("aaa");
-
+                            
                         }
 
                     }
@@ -101,7 +103,7 @@ namespace Coursework_main
                 Console.WriteLine(ioEx.Message);
             }
         }
-        public FilteredRecords Filter(DateTime minDate = default(DateTime), DateTime maxDate = default(DateTime), string fileName = default(string), int resultType = 0, string ip = default(string), int lastRecords = 0)
+        public FilteredRecords Filter(DateTime minDate = default(DateTime), DateTime maxDate = default(DateTime), string fileName = default(string), int resultType = 0, string ip = default(string), int lastRecords = -1)
         {
             FilteredRecords filteredList = new FilteredRecords();
 
@@ -121,7 +123,7 @@ namespace Coursework_main
             if (ip != default(string))
                 isIpFilterActive = true;
             bool isLastRecordsFilterActive = false;
-            if (lastRecords > 0)
+            if (lastRecords > -1)
                 isLastRecordsFilterActive = true;
             //if (isMinDateFilterActive || isMaxDateFilterActive || isNameFilterActive || isResultFilterActive || isIpFilterActive || isLastRecordsFilterActive)
             //    filteredList.anyFilterActive = true;
@@ -498,9 +500,12 @@ namespace Coursework_main
         {
             if (FilteredRecordsList.Any())
             {
+                int lineNumbers = 0;
                 foreach (OneRecord _record in FilteredRecordsList)
                 {
-                    richTextBox1.Text += _record.logString + '\n';
+                    //richTextBox1.Text += _record.logString + '\n';
+                    lineNumbers++;
+                    richTextBox1.Text += String.Format("[{0}]    {1}\n", lineNumbers, _record.logString);
                     //_record.WriteToConsole();
                     //Console.WriteLine("");
                 }

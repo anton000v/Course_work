@@ -30,6 +30,7 @@ namespace Coursework_main
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.SearchButton = new System.Windows.Forms.Button();
             this.MinDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.maxDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -42,6 +43,7 @@ namespace Coursework_main
             this.FileNameTextBox = new System.Windows.Forms.TextBox();
             this.FileNameGroupBox = new System.Windows.Forms.GroupBox();
             this.typeResultGroupBox = new System.Windows.Forms.GroupBox();
+            this.ResultTypeComboBox = new System.Windows.Forms.ComboBox();
             this.resultTypeCheckbox = new System.Windows.Forms.CheckBox();
             this.IpGroupBox = new System.Windows.Forms.GroupBox();
             this.IpTextBox = new System.Windows.Forms.TextBox();
@@ -51,17 +53,24 @@ namespace Coursework_main
             this.FileNameShowTextBox = new System.Windows.Forms.TextBox();
             this.ChoseFileButton = new System.Windows.Forms.Button();
             this.ChoseFileGroupbox = new System.Windows.Forms.GroupBox();
-            this.ResultTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label5 = new System.Windows.Forms.Label();
+            this.checkAllFileCheckbox = new System.Windows.Forms.CheckBox();
+            this.checkLastNRecordsCheckbox = new System.Windows.Forms.CheckBox();
+            this.searchAllFileOrNotGroupBox = new System.Windows.Forms.GroupBox();
+            this.CheckLastRecordsNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.DateGroupBox.SuspendLayout();
             this.FileNameGroupBox.SuspendLayout();
             this.typeResultGroupBox.SuspendLayout();
             this.IpGroupBox.SuspendLayout();
             this.ChoseFileGroupbox.SuspendLayout();
+            this.searchAllFileOrNotGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CheckLastRecordsNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(92, 449);
+            this.SearchButton.Location = new System.Drawing.Point(92, 522);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(107, 38);
             this.SearchButton.TabIndex = 1;
@@ -177,6 +186,14 @@ namespace Coursework_main
             this.typeResultGroupBox.TabStop = false;
             this.typeResultGroupBox.Text = "Тип результата";
             // 
+            // ResultTypeComboBox
+            // 
+            this.ResultTypeComboBox.FormattingEnabled = true;
+            this.ResultTypeComboBox.Location = new System.Drawing.Point(121, 19);
+            this.ResultTypeComboBox.Name = "ResultTypeComboBox";
+            this.ResultTypeComboBox.Size = new System.Drawing.Size(100, 21);
+            this.ResultTypeComboBox.TabIndex = 0;
+            // 
             // resultTypeCheckbox
             // 
             this.resultTypeCheckbox.AutoSize = true;
@@ -267,19 +284,89 @@ namespace Coursework_main
             this.ChoseFileGroupbox.TabStop = false;
             this.ChoseFileGroupbox.Text = "Выберите файл";
             // 
-            // ResultTypeComboBox
+            // contextMenuStrip1
             // 
-            this.ResultTypeComboBox.FormattingEnabled = true;
-            this.ResultTypeComboBox.Location = new System.Drawing.Point(121, 19);
-            this.ResultTypeComboBox.Name = "ResultTypeComboBox";
-            this.ResultTypeComboBox.Size = new System.Drawing.Size(100, 21);
-            this.ResultTypeComboBox.TabIndex = 0;
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(160, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "строках";
+            this.label5.Click += new System.EventHandler(this.label5_Click_1);
+            // 
+            // checkAllFileCheckbox
+            // 
+            this.checkAllFileCheckbox.AutoSize = true;
+            this.checkAllFileCheckbox.Checked = true;
+            this.checkAllFileCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkAllFileCheckbox.Location = new System.Drawing.Point(0, 19);
+            this.checkAllFileCheckbox.Name = "checkAllFileCheckbox";
+            this.checkAllFileCheckbox.Size = new System.Drawing.Size(103, 17);
+            this.checkAllFileCheckbox.TabIndex = 24;
+            this.checkAllFileCheckbox.Text = "Во всем файле";
+            this.checkAllFileCheckbox.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.checkAllFileCheckbox.UseVisualStyleBackColor = true;
+            this.checkAllFileCheckbox.CheckedChanged += new System.EventHandler(this.checkAllFileCheckbox_CheckedChanged);
+            // 
+            // checkLastNRecordsCheckbox
+            // 
+            this.checkLastNRecordsCheckbox.AutoSize = true;
+            this.checkLastNRecordsCheckbox.Location = new System.Drawing.Point(0, 45);
+            this.checkLastNRecordsCheckbox.Name = "checkLastNRecordsCheckbox";
+            this.checkLastNRecordsCheckbox.Size = new System.Drawing.Size(92, 17);
+            this.checkLastNRecordsCheckbox.TabIndex = 25;
+            this.checkLastNRecordsCheckbox.Text = "В последних ";
+            this.checkLastNRecordsCheckbox.UseVisualStyleBackColor = true;
+            this.checkLastNRecordsCheckbox.CheckedChanged += new System.EventHandler(this.checkLastNRecordsCheckbox_CheckedChanged);
+            // 
+            // searchAllFileOrNotGroupBox
+            // 
+            this.searchAllFileOrNotGroupBox.Controls.Add(this.CheckLastRecordsNumericUpDown);
+            this.searchAllFileOrNotGroupBox.Controls.Add(this.checkAllFileCheckbox);
+            this.searchAllFileOrNotGroupBox.Controls.Add(this.checkLastNRecordsCheckbox);
+            this.searchAllFileOrNotGroupBox.Controls.Add(this.label5);
+            this.searchAllFileOrNotGroupBox.Location = new System.Drawing.Point(19, 426);
+            this.searchAllFileOrNotGroupBox.Name = "searchAllFileOrNotGroupBox";
+            this.searchAllFileOrNotGroupBox.Size = new System.Drawing.Size(227, 79);
+            this.searchAllFileOrNotGroupBox.TabIndex = 26;
+            this.searchAllFileOrNotGroupBox.TabStop = false;
+            this.searchAllFileOrNotGroupBox.Text = "Производить поиск";
+            // 
+            // CheckLastRecordsNumericUpDown
+            // 
+            this.CheckLastRecordsNumericUpDown.Enabled = false;
+            this.CheckLastRecordsNumericUpDown.Location = new System.Drawing.Point(98, 42);
+            this.CheckLastRecordsNumericUpDown.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.CheckLastRecordsNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CheckLastRecordsNumericUpDown.Name = "CheckLastRecordsNumericUpDown";
+            this.CheckLastRecordsNumericUpDown.Size = new System.Drawing.Size(50, 20);
+            this.CheckLastRecordsNumericUpDown.TabIndex = 26;
+            this.CheckLastRecordsNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CheckLastRecordsNumericUpDown.ValueChanged += new System.EventHandler(this.CheckLastRecordsNumericUpDown_ValueChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1142, 572);
+            this.Controls.Add(this.searchAllFileOrNotGroupBox);
             this.Controls.Add(this.ChoseFileGroupbox);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.ipCheckbox);
@@ -304,6 +391,9 @@ namespace Coursework_main
             this.IpGroupBox.PerformLayout();
             this.ChoseFileGroupbox.ResumeLayout(false);
             this.ChoseFileGroupbox.PerformLayout();
+            this.searchAllFileOrNotGroupBox.ResumeLayout(false);
+            this.searchAllFileOrNotGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CheckLastRecordsNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,6 +424,12 @@ namespace Coursework_main
         private System.Windows.Forms.Button ChoseFileButton;
         private System.Windows.Forms.GroupBox ChoseFileGroupbox;
         private System.Windows.Forms.ComboBox ResultTypeComboBox;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox checkAllFileCheckbox;
+        private System.Windows.Forms.CheckBox checkLastNRecordsCheckbox;
+        private System.Windows.Forms.GroupBox searchAllFileOrNotGroupBox;
+        private System.Windows.Forms.NumericUpDown CheckLastRecordsNumericUpDown;
     }
 }
 

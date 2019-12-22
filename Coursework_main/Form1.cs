@@ -91,10 +91,19 @@ namespace Coursework_main
             string fileName = default(string);
             string ip = default(string);
 
+            int lastRecords = -1;
+
             if (logFile == null)
             {
                 MessageBox.Show("Пожалуйста, выберите файл.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+            if(checkLastNRecordsCheckbox.Checked)
+            {
+                AreAnyFilters = true;
+                lastRecords = (int)CheckLastRecordsNumericUpDown.Value;
+                //if (lastRecords != 1)
+                    lastRecords--;
             }
             if (DateCheckbox.Checked)
             {
@@ -149,7 +158,7 @@ namespace Coursework_main
             if(allFiltersFilled)
             {
                 richTextBox1.Text = "";
-                logFile.Filter(minDate, maxDate, fileName, resultType,ip).WriteFilterRecordsToWindow(richTextBox1);
+                logFile.Filter(minDate, maxDate, fileName, resultType,ip,lastRecords).WriteFilterRecordsToWindow(richTextBox1);
                 //MessageBox.Show("AAAAAAAAAAAAAAAAA", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
@@ -177,6 +186,34 @@ namespace Coursework_main
         }
 
         private void FileNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkAllFileCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkAllFileCheckbox.Checked)
+            {
+                checkLastNRecordsCheckbox.Checked = false;
+                CheckLastRecordsNumericUpDown.Enabled = false;
+            }
+        }
+
+        private void checkLastNRecordsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkLastNRecordsCheckbox.Checked)
+            {
+                checkAllFileCheckbox.Checked = false;
+                CheckLastRecordsNumericUpDown.Enabled = true;
+            }
+        }
+
+        private void label5_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckLastRecordsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
 
         }
