@@ -143,13 +143,31 @@ namespace Coursework_main
                 MessageBox.Show("Пожалуйста, заполните все выбранные фильтры, или деактивируйте их", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            
             if (!AreAnyFilters && allFiltersFilled)
             {
                 DialogResult ReadAllFileDialogResult = MessageBox.Show("Вы не выбрали ни один из фильтров. Файл может быть очень большим.\nВы уверены, что хотите прочитать его весь?", "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (ReadAllFileDialogResult == DialogResult.Yes)
                 {
                     richTextBox1.Text = "";
+                    //logFile.isWholeFileRead = true;
                     logFile.writeFileToWindow(richTextBox1);
+
+                    logFile.isFilterModeActive = false;
+
+                    FileInfoRadioButton.Enabled = true;
+                    AnalysisTextBox.Enabled = true;
+
+                    if (FileInfoRadioButton.Checked == true)
+                    {
+                        FileInfoRadioButton.Checked = false;
+                        FileInfoRadioButton.Checked = true;
+                    }
+                    else
+                        FileInfoRadioButton.Checked = true;
+                    HackingStatiscticsRadiobutton.Enabled = false;
+                    //HackingStatiscticsRadiobutton.Enabled = false;
+                    //logFile.writeFileInfoToWindow(AnalysisTextBox,false);
                     return;
                 }
                 else
@@ -158,10 +176,32 @@ namespace Coursework_main
             if(allFiltersFilled)
             {
                 richTextBox1.Text = "";
-                logFile.Filter(minDate, maxDate, fileName, resultType,ip,lastRecords).WriteFilterRecordsToWindow(richTextBox1);
+                filteredRecords = logFile.Filter(minDate, maxDate, fileName, resultType, ip, lastRecords);
+                filteredRecords.WriteFilterRecordsToWindow(richTextBox1);
+
+                logFile.isFilterModeActive = true;
+
+                FileInfoRadioButton.Enabled = true;
+                AnalysisTextBox.Enabled = true;
+                //FileInfoRadioButton.Checked = true;
+
+               
+
+                if (FileInfoRadioButton.Checked == true)
+                {
+                    FileInfoRadioButton.Checked = false;
+                    FileInfoRadioButton.Checked = true;
+                }
+                else
+                    FileInfoRadioButton.Checked = true;
+                HackingStatiscticsRadiobutton.Enabled = false;
+                //logFile.writeFileInfoToWindow(AnalysisTextBox,true);
                 //MessageBox.Show("AAAAAAAAAAAAAAAAA", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            
+
+            //MessageBox.Show(String.Format("{0}", logFile.isFilterModeActive));
+
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -181,6 +221,7 @@ namespace Coursework_main
 
         private void ChoseFileButton_Click(object sender, EventArgs e)
         {
+            Refresh();
             logFile = new LogFile();
             FileNameShowTextBox.Text = logFile.onlyFileName;
         }
@@ -216,6 +257,59 @@ namespace Coursework_main
         private void CheckLastRecordsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void SecurityAnalysisButton_Click(object sender, EventArgs e)
+        {
+            
+            if (!logFile.isFilterModeActive)
+            {
+                DialogResult ReadAllFileDialogResult = MessageBox.Show("Вы действительно хотите сканировать весь файл? (Не рекомендуется)", "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (ReadAllFileDialogResult == DialogResult.Yes)
+                {
+                    dangerousRequests = logFile.SecureFilterAndScanAllFile();
+                    HackingStatiscticsRadiobutton.Enabled = true;
+                    HackingStatiscticsRadiobutton.Checked = true;
+                    return;
+                }
+            }
+            else
+            {
+                dangerousRequests =  filteredRecords.AttackDetector();
+                HackingStatiscticsRadiobutton.Enabled = true;
+                HackingStatiscticsRadiobutton.Checked = true;
+                return;
+            }
+            
+
+        }
+
+        private void FileInfoRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (FileInfoRadioButton.Checked)
+            {
+                //AnalysisTextBox.Text = "";
+                logFile.writeFileInfoToWindow(AnalysisTextBox);
+            }
+            else
+            {
+                AnalysisTextBox.Text = "";
+                //HackingStatiscticsRadiobutton.Checked = false;
+            }
+        }
+
+        private void HackingStatiscticsRadiobutton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (HackingStatiscticsRadiobutton.Checked)
+            {
+                //AnalysisTextBox.Text = "";
+                dangerousRequests.writeDangerousRequestsToWindow(AnalysisTextBox);
+            }
+            else
+            {
+                AnalysisTextBox.Text = "";
+                //FileInfoRadioButton.Checked = false;
+            }
         }
     }
 

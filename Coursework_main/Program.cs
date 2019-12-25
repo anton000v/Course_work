@@ -27,7 +27,14 @@ namespace Coursework_main
     {
         public string fileName;
         public string onlyFilePath;
-        public string onlyFileName;
+        public string onlyFileName = "";
+
+        //public bool isWholeFileRead;
+        public bool isFilterModeActive = false;
+
+        public List<string> wrongRecordsList;
+
+        public Dictionary<string,float> fileInfo;
         //private bool isAnyFilterActive = false;
 
         public LogFile()
@@ -41,6 +48,12 @@ namespace Coursework_main
                 onlyFilePath = onlyFilePath.Replace(onlyFileName, "");
                 
             }
+            
+            fileInfo = new Dictionary<string, float>();
+            FileInfo file = new System.IO.FileInfo(fileName);
+            long size = file.Length;
+            fileInfo.Add("Размер файла", (int)size);
+            //fileInfo.Add("Некорректные логи", 0);
         }
         public void writeFileToConsole()
         {
@@ -83,19 +96,31 @@ namespace Coursework_main
                 using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
                 {
                     int lineNumbers = 0;
+                    int outputLineNumbers = 0;
+                    int wrongRecords = 0;
                     string line;
+                    wrongRecordsList = new List<string>();
                     while ((line = sr.ReadLine()) != null)
                     {
+                        lineNumbers++;
                         if (OneRecord.IsRecordCanBeCreated(line))
                         {
-                            lineNumbers++;
+                            outputLineNumbers++;
                             OneRecord record = new OneRecord(line);
-                            richTextBox1.Text += String.Format("[{0}]    {1}\n",lineNumbers,record.logString);
+                            richTextBox1.Text += String.Format("[{0}]    {1}\n", lineNumbers, record.logString);
                             //richTextBox1.AppendText("aaa");
-                            
+                        }
+                        else
+                        {
+                            wrongRecords++;
+                            wrongRecordsList.Add(line);
                         }
 
                     }
+                    fileInfo["Колличество строк"] = lineNumbers;
+                    fileInfo["Выведено строк"] = outputLineNumbers;
+                    fileInfo["Некорректные запросы"] = wrongRecords;
+                    
                 }
             }
             catch (FileNotFoundException ioEx)
@@ -103,6 +128,53 @@ namespace Coursework_main
                 Console.WriteLine(ioEx.Message);
             }
         }
+
+        public void writeFileInfoToWindow(System.Windows.Forms.RichTextBox InfoTextBox)
+        {
+            InfoTextBox.Text = "";
+            
+            foreach (KeyValuePair<string, float> keyValue in fileInfo)
+            {
+                if (keyValue.Key == "Размер файла")
+                {
+                    InfoTextBox.Text += String.Format("{0} : {1} байт\n", keyValue.Key, keyValue.Value);
+                    continue;
+                }
+                //if (!isFilterModeActive)
+                //{
+                //    if (keyValue.Key == "Выведено строк")
+                //        continue;
+                //}
+                //else
+                //{
+                //    if (keyValue.Key == "Выведено строк")
+                //    {
+                //        InfoTextBox.Text += String.Format("{0} : {1}\n", keyValue.Key, keyValue.Value);
+                //        continue;
+                //    }
+                //}
+                //if (isFilterModeActive)
+                //    if (keyValue.Key == "Выведено строк")
+
+                if (keyValue.Key == "Некорректные запросы")
+                {
+                    if (keyValue.Value == 0)
+                        InfoTextBox.Text += String.Format("{0} : {1}\n", keyValue.Key, keyValue.Value);
+                    else
+                    {
+                        InfoTextBox.Text += String.Format("{0} : {1}\n", keyValue.Key, keyValue.Value);
+                        foreach (string _record in wrongRecordsList)
+                            InfoTextBox.Text += "  " + _record + "\n";
+                    }
+                    continue;
+                }
+                //Console.WriteLine("{0} : {1}", keyValue.Key, keyValue.Value);
+                InfoTextBox.Text += String.Format("{0} : {1}\n", keyValue.Key, keyValue.Value);
+
+                //MessageBox.Show(String.Format("{0} - {1}", keyValue.Key,keyValue.Value));
+            }
+        }
+
         public FilteredRecords Filter(DateTime minDate = default(DateTime), DateTime maxDate = default(DateTime), string fileName = default(string), int resultType = 0, string ip = default(string), int lastRecords = -1)
         {
             FilteredRecords filteredList = new FilteredRecords();
@@ -142,15 +214,30 @@ namespace Coursework_main
             bool isMinDateFilterActive, bool IsMaxDateFilterActive, bool isNameFilterActive, bool isResultFilterActive, bool isIpFilterActive, bool isLastRecordsFilterActive)
         {
             FilteredRecords filteredList = new FilteredRecords();
+            wrongRecordsList = new List<string>();
             try
             {
+                int lineNumbersInFile = 0;
+                using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        ++lineNumbersInFile;
+                    }
+                }
+                fileInfo["Колличество строк"] = lineNumbersInFile;
                 if (!isLastRecordsFilterActive)
                 {
+
                     using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
                     {
                         string line;
+                        int lineNumbers = 0;
+                        int wrongRecords = 0;
                         while ((line = sr.ReadLine()) != null)
                         {
+
                             if (OneRecord.IsRecordCanBeCreated(line))
                             {
                                 OneRecord record = new OneRecord(line);
@@ -175,28 +262,41 @@ namespace Coursework_main
 
 
                                 if (allFiltersOK)
+                                {
                                     filteredList.AddRecord(record);
+                                    lineNumbers++;
+                                }
+                            }
+                            else
+                            {
+                                wrongRecords++;
+                                wrongRecordsList.Add(line);
                             }
                         }
+                        
+                        fileInfo["Выведено строк"] = lineNumbers;
+                        fileInfo["Некорректные запросы"] = wrongRecords;
                     }
                 }
                 else
                 {
-                    int lineNumbersInFile = 0;
-                    using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            ++lineNumbersInFile;
-                        }
-                    }
+                    //int lineNumbersInFile = 0;
+                    //using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
+                    //{
+                    //    string line;
+                    //    while ((line = sr.ReadLine()) != null)
+                    //    {
+                    //        ++lineNumbersInFile;
+                    //    }
+                    //}
                     if (_lastRecords > lineNumbersInFile)
                         _lastRecords = lineNumbersInFile;
                     using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
                     {
                         string line;
                         int lineNumber = 0;
+                        int outputLineNumbers = 0;
+                        int wrongRecords = 0;
                         while ((line = sr.ReadLine()) != null)
                         {
                             ++lineNumber;
@@ -225,12 +325,23 @@ namespace Coursework_main
 
 
                                     if (allFiltersOK)
+                                    {
                                         filteredList.AddRecord(record);
+                                        outputLineNumbers++;
+                                    }
+                                }
+                                else
+                                {
+                                    wrongRecords++;
+                                    wrongRecordsList.Add(line);
                                 }
                             }
                         }
+                        fileInfo["Выведено строк"] = outputLineNumbers;
+                        fileInfo["Некорректные запросы"] = wrongRecords;
                     }
                 }
+               
             }
             catch (FileNotFoundException ioEx)
             {
@@ -464,6 +575,7 @@ namespace Coursework_main
     public class FilteredRecords
     {
         private bool anyfilteractive = false;
+        //public Dictionary<string, int> fileInfo;
         public bool anyFilterActive
         {
             get { return anyFilterActive; }
@@ -474,6 +586,7 @@ namespace Coursework_main
         public FilteredRecords()
         {
             FilteredRecordsList = new List<OneRecord>();
+            //fileInfo = new Dictionary<string, int>();
             //DangerousHttpRequests = new List<OneRecord>();
         }
         public void AddRecord(OneRecord _record)
@@ -509,12 +622,15 @@ namespace Coursework_main
                     //_record.WriteToConsole();
                     //Console.WriteLine("");
                 }
+                //fileInfo["Число строк"] = lineNumbers;
             }
             else
             {
                
                 richTextBox1.Text = "Filtered list is empty";
             }
+           
+            //fileInfo["Некорректные логи"] = wrongRecords;
         }
         public DangerousHTTPRequests AttackDetector()
         {
@@ -654,6 +770,46 @@ namespace Coursework_main
                 Console.WriteLine("There are no dangerous requests");
             }
         }
+
+        public void writeDangerousRequestsToWindow(System.Windows.Forms.RichTextBox AnalysisTextBox)
+        {
+            //if (FilteredRecordsList.Any())
+            //{
+            //    int lineNumbers = 0;
+            //    foreach (OneRecord _record in FilteredRecordsList)
+            //    {
+            //        //richTextBox1.Text += _record.logString + '\n';
+            //        lineNumbers++;
+            //        richTextBox1.Text += String.Format("[{0}]    {1}\n", lineNumbers, _record.logString);
+            //        //_record.WriteToConsole();
+            //        //Console.WriteLine("");
+            //    }
+            //}
+            //else
+            //{
+
+            //    richTextBox1.Text = "Filtered list is empty";
+            //}
+
+            if (DangerousIp.Any())
+            {
+                int lineNumbers = 0;
+                AnalysisTextBox.Text = "[Номер]  [ip] - [Вероятность попытки взлома]\n\n";
+                foreach (KeyValuePair<string, float> keyValue in DangerousIp)
+                {
+                    lineNumbers++;
+                    //Console.WriteLine("{0} - {1:F}", keyValue.Key, keyValue.Value);
+                    
+                    AnalysisTextBox.Text += String.Format("[{0}]  {1} - {2:F}%", lineNumbers,keyValue.Key, keyValue.Value);
+                }
+            }
+            else
+            {
+                AnalysisTextBox.Text = String.Format("There are no dangerous requests");
+            }
+
+        }
+
         public static bool isRecordLoginFailure(OneRecord _record)
         {
             if (_record.request_file_name == "login.php")

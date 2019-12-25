@@ -59,6 +59,10 @@ namespace Coursework_main
             this.checkLastNRecordsCheckbox = new System.Windows.Forms.CheckBox();
             this.searchAllFileOrNotGroupBox = new System.Windows.Forms.GroupBox();
             this.CheckLastRecordsNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.SecurityAnalysisButton = new System.Windows.Forms.Button();
+            this.AnalysisTextBox = new System.Windows.Forms.RichTextBox();
+            this.HackingStatiscticsRadiobutton = new System.Windows.Forms.RadioButton();
+            this.FileInfoRadioButton = new System.Windows.Forms.RadioButton();
             this.DateGroupBox.SuspendLayout();
             this.FileNameGroupBox.SuspendLayout();
             this.typeResultGroupBox.SuspendLayout();
@@ -236,10 +240,10 @@ namespace Coursework_main
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Myanmar Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(283, 9);
+            this.richTextBox1.Location = new System.Drawing.Point(283, 24);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(847, 551);
+            this.richTextBox1.Size = new System.Drawing.Size(589, 481);
             this.richTextBox1.TabIndex = 16;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -361,11 +365,60 @@ namespace Coursework_main
             0});
             this.CheckLastRecordsNumericUpDown.ValueChanged += new System.EventHandler(this.CheckLastRecordsNumericUpDown_ValueChanged);
             // 
+            // SecurityAnalysisButton
+            // 
+            this.SecurityAnalysisButton.Location = new System.Drawing.Point(491, 511);
+            this.SecurityAnalysisButton.Name = "SecurityAnalysisButton";
+            this.SecurityAnalysisButton.Size = new System.Drawing.Size(211, 36);
+            this.SecurityAnalysisButton.TabIndex = 27;
+            this.SecurityAnalysisButton.Text = "Анализ на безопасность";
+            this.SecurityAnalysisButton.UseVisualStyleBackColor = true;
+            this.SecurityAnalysisButton.Click += new System.EventHandler(this.SecurityAnalysisButton_Click);
+            // 
+            // AnalysisTextBox
+            // 
+            this.AnalysisTextBox.Location = new System.Drawing.Point(878, 34);
+            this.AnalysisTextBox.Name = "AnalysisTextBox";
+            this.AnalysisTextBox.ReadOnly = true;
+            this.AnalysisTextBox.Size = new System.Drawing.Size(252, 471);
+            this.AnalysisTextBox.TabIndex = 28;
+            this.AnalysisTextBox.Text = "";
+            // 
+            // HackingStatiscticsRadiobutton
+            // 
+            this.HackingStatiscticsRadiobutton.AutoSize = true;
+            this.HackingStatiscticsRadiobutton.Enabled = false;
+            this.HackingStatiscticsRadiobutton.Location = new System.Drawing.Point(1019, 12);
+            this.HackingStatiscticsRadiobutton.Name = "HackingStatiscticsRadiobutton";
+            this.HackingStatiscticsRadiobutton.Size = new System.Drawing.Size(124, 17);
+            this.HackingStatiscticsRadiobutton.TabIndex = 30;
+            this.HackingStatiscticsRadiobutton.TabStop = true;
+            this.HackingStatiscticsRadiobutton.Text = "Статистика взлома";
+            this.HackingStatiscticsRadiobutton.UseVisualStyleBackColor = true;
+            this.HackingStatiscticsRadiobutton.CheckedChanged += new System.EventHandler(this.HackingStatiscticsRadiobutton_CheckedChanged);
+            // 
+            // FileInfoRadioButton
+            // 
+            this.FileInfoRadioButton.AutoSize = true;
+            this.FileInfoRadioButton.Enabled = false;
+            this.FileInfoRadioButton.Location = new System.Drawing.Point(878, 12);
+            this.FileInfoRadioButton.Name = "FileInfoRadioButton";
+            this.FileInfoRadioButton.Size = new System.Drawing.Size(135, 17);
+            this.FileInfoRadioButton.TabIndex = 31;
+            this.FileInfoRadioButton.TabStop = true;
+            this.FileInfoRadioButton.Text = "Информация о файле";
+            this.FileInfoRadioButton.UseVisualStyleBackColor = true;
+            this.FileInfoRadioButton.CheckedChanged += new System.EventHandler(this.FileInfoRadioButton_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1142, 572);
+            this.Controls.Add(this.FileInfoRadioButton);
+            this.Controls.Add(this.HackingStatiscticsRadiobutton);
+            this.Controls.Add(this.AnalysisTextBox);
+            this.Controls.Add(this.SecurityAnalysisButton);
             this.Controls.Add(this.searchAllFileOrNotGroupBox);
             this.Controls.Add(this.ChoseFileGroupbox);
             this.Controls.Add(this.richTextBox1);
@@ -417,6 +470,8 @@ namespace Coursework_main
         private System.Windows.Forms.CheckBox ipCheckbox;
         private System.Windows.Forms.TextBox IpTextBox;
         public LogFile logFile;
+        public DangerousHTTPRequests dangerousRequests;
+        public FilteredRecords filteredRecords;
         public Dictionary<int, string> httpResultTypes = OneRecord.GetHTTPResultValidTypes();
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label4;
@@ -430,6 +485,10 @@ namespace Coursework_main
         private System.Windows.Forms.CheckBox checkLastNRecordsCheckbox;
         private System.Windows.Forms.GroupBox searchAllFileOrNotGroupBox;
         private System.Windows.Forms.NumericUpDown CheckLastRecordsNumericUpDown;
+        private System.Windows.Forms.Button SecurityAnalysisButton;
+        private System.Windows.Forms.RichTextBox AnalysisTextBox;
+        private System.Windows.Forms.RadioButton HackingStatiscticsRadiobutton;
+        private System.Windows.Forms.RadioButton FileInfoRadioButton;
     }
 }
 
