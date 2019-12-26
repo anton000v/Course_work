@@ -35,6 +35,8 @@ namespace Coursework_main
         public List<string> wrongRecordsList;
 
         public Dictionary<string,float> fileInfo;
+
+        private FileSystemWatcher watcher;
         //private bool isAnyFilterActive = false;
 
         public LogFile()
@@ -50,8 +52,14 @@ namespace Coursework_main
             }
             
             fileInfo = new Dictionary<string, float>();
-            FileInfo file = new System.IO.FileInfo(fileName);
-            long size = file.Length;
+            long size = 0;
+            if (fileName != null)
+            {
+                FileInfo file = new System.IO.FileInfo(fileName);
+                size = file.Length;
+            }
+            else
+                return;
             fileInfo.Add("Размер файла", (int)size);
             //fileInfo.Add("Некорректные логи", 0);
         }
@@ -393,9 +401,17 @@ namespace Coursework_main
             RunWatcher();
 
         }
+        public void LogWatcherOFF()
+        {
+            StopWatcher();
+        }
+        private void StopWatcher()
+        {
+            watcher.Dispose();
+        }
         private void RunWatcher()
         {
-            FileSystemWatcher watcher = new FileSystemWatcher { Path = onlyFilePath, Filter = onlyFileName };
+            watcher = new FileSystemWatcher { Path = onlyFilePath, Filter = onlyFileName };
             watcher.Changed += WatcherChanged;
             watcher.EnableRaisingEvents = true;
         }
@@ -403,6 +419,7 @@ namespace Coursework_main
         private void WatcherChanged(object sender, FileSystemEventArgs e)
         {
             Console.WriteLine("Type of changes: {0};  Changed: {1}", e.ChangeType, e.Name);
+            MessageBox.Show(String.Format("Type of changes: {0};  Changed: {1}", e.ChangeType, e.Name));
         }
     }
     public class OneRecord
@@ -511,7 +528,9 @@ namespace Coursework_main
 
         public DateTime ConvertDateToDateFormat(string _string)
         {
+           
             _string = String.Concat(_string.Substring(0, _string.IndexOf(':')), ' ', _string.Substring(_string.IndexOf(':') + 1));
+            
             DateTime date = DateTime.Parse(_string);
             return date;
         }

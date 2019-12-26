@@ -166,6 +166,7 @@ namespace Coursework_main
                     else
                         FileInfoRadioButton.Checked = true;
                     HackingStatiscticsRadiobutton.Enabled = false;
+                    SecurityAnalysisButton.Enabled = true;
                     //HackingStatiscticsRadiobutton.Enabled = false;
                     //logFile.writeFileInfoToWindow(AnalysisTextBox,false);
                     return;
@@ -195,6 +196,7 @@ namespace Coursework_main
                 else
                     FileInfoRadioButton.Checked = true;
                 HackingStatiscticsRadiobutton.Enabled = false;
+                SecurityAnalysisButton.Enabled = true;
                 //logFile.writeFileInfoToWindow(AnalysisTextBox,true);
                 //MessageBox.Show("AAAAAAAAAAAAAAAAA", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -221,9 +223,14 @@ namespace Coursework_main
 
         private void ChoseFileButton_Click(object sender, EventArgs e)
         {
-            Refresh();
+            //Refresh();
             logFile = new LogFile();
             FileNameShowTextBox.Text = logFile.onlyFileName;
+            if (logFile != null)
+            {
+                backgroundModeGroupBox.Visible = true;
+                BackgroundModeActive.Visible = true;
+            }
         }
 
         private void FileNameTextBox_TextChanged(object sender, EventArgs e)
@@ -238,6 +245,13 @@ namespace Coursework_main
                 checkLastNRecordsCheckbox.Checked = false;
                 CheckLastRecordsNumericUpDown.Enabled = false;
             }
+            else
+            {
+                if(!checkLastNRecordsCheckbox.Checked)
+                {
+                    checkLastNRecordsCheckbox.Checked = true;
+                }
+            }
         }
 
         private void checkLastNRecordsCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -246,6 +260,13 @@ namespace Coursework_main
             {
                 checkAllFileCheckbox.Checked = false;
                 CheckLastRecordsNumericUpDown.Enabled = true;
+            }
+            else
+            {
+                if (!checkAllFileCheckbox.Checked)
+                {
+                    checkAllFileCheckbox.Checked = true;
+                }
             }
         }
 
@@ -310,6 +331,92 @@ namespace Coursework_main
                 AnalysisTextBox.Text = "";
                 //FileInfoRadioButton.Checked = false;
             }
+        }
+
+        private void BackgroundModeActive_Click(object sender, EventArgs e)
+        {
+            if (BackgroundModeActive.Text == "Активировать")
+            {
+                DialogResult logWatcherOnDialogResult =  MessageBox.Show(String.Format("Вы действительно хотите активировать фоновый режим, анализирующий файл \"{0}\"?", logFile.onlyFileName), "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (logWatcherOnDialogResult == DialogResult.Yes)
+                {
+                    logFile.LogWatcherON();
+                    BackgroundModeActive.Text = "Деактивировать";
+                    //WindowState = FormWindowState.Minimized;
+                    notifyIcon1.Icon = SystemIcons.Application;
+                    notifyIcon1.Visible = true;
+                    notifyIcon1.BalloonTipText = "log VnVlyzer переведен в фоновый режим";
+                    notifyIcon1.ShowBalloonTip(1000);
+                    //Form1_Deactivate(sender, e);
+                }
+                else
+                    return;
+            }
+            else
+            {
+                DialogResult logWatcherOnDialogResult = MessageBox.Show(String.Format("Вы действительно хотите деактивировать фоновый режим, анализирующий файл \"{0}\"?", logFile.onlyFileName), "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (logWatcherOnDialogResult == DialogResult.Yes)
+                {
+                    logFile.LogWatcherOFF();
+                    BackgroundModeActive.Text = "Активировать";
+                }
+                else
+                    return;
+            }
+        }
+
+        //private void Form1_SizeChanged(object sender, EventArgs e)
+        //{
+        //    if (this.WindowState == FormWindowState.Minimized)
+        //    {
+        //        this.ShowInTaskbar = false;
+        //        notifyIcon1.Visible = true;
+        //    }
+        //}
+
+        //private void notifyIcon1_DoubleClick(object sender, MouseEventArgs e)
+        //{
+        //    //if (this.WindowState == FormWindowState.Minimized)
+        //    //{
+        //    //    this.WindowState = FormWindowState.Normal;
+        //    //    this.ShowInTaskbar = true;
+        //    //    notifyIcon1.Visible = false;
+        //    //}
+        //    //else
+        //    //{
+        //        this.WindowState = FormWindowState.Normal;
+        //        this.ShowInTaskbar = true;
+        //        notifyIcon1.Visible = false;
+        //    //}
+        //}
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (notifyIcon1.Visible) 
+            {
+                this.Hide();
+                e.Cancel = true;
+                notifyIcon1.BalloonTipText = "Не забудьте про фоновый режим";
+                notifyIcon1.ShowBalloonTip(1000);
+            }
+            else
+            {
+                e.Cancel = false;
+            }
+
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            //this.WindowState = FormWindowState.Normal;
+
+            //if (this.Visible == Hide)
+            //{
+                this.Show();
+
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                //notifyIcon1.Visible = ;
+            
         }
     }
 
