@@ -359,6 +359,10 @@ namespace Coursework_main
                 {
                     logFile.LogWatcherOFF();
                     BackgroundModeActive.Text = "Активировать";
+                    notifyIcon1.BalloonTipText = "log VnVlyzer переведен в обычный режим";
+                    notifyIcon1.ShowBalloonTip(1000);
+                    notifyIcon1.Visible = false;
+
                 }
                 else
                     return;
