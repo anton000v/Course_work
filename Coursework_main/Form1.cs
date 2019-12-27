@@ -4,17 +4,23 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Coursework_main
 {
+
+
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
+
+            //BackgroundWatcher.SendEmailAsync();
+
             //logFile = new LogFile();
 
         }
@@ -347,43 +353,48 @@ namespace Coursework_main
         {
             if (BackgroundModeActive.Text == "Активировать")
             {
-                DialogResult logWatcherOnDialogResult =  MessageBox.Show(String.Format("Вы действительно хотите активировать фоновый режим, анализирующий файл \"{0}\"?", logFile.onlyFileName), "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (logWatcherOnDialogResult == DialogResult.Yes)
-                {
-                    backgroundWatcher = LogFile.MakeBackgroundWatcher(logFile,notifyIcon1);
-                    backgroundWatcher.LogWatcherON();
-                    backgroundWatcher.addDangerousIp += DisplayDangerousRequests;
-                    logFile.isBackgroundWatcherON = true;
 
-                    BackgroundModeActive.Text = "Деактивировать";
+                    DialogResult logWatcherOnDialogResult = MessageBox.Show(String.Format("Вы действительно хотите активировать фоновый режим, анализирующий файл \"{0}\"?", logFile.onlyFileName), "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (logWatcherOnDialogResult == DialogResult.Yes)
+                    {
 
-                    SearchButton.Enabled = false;
-                    searchAllFileOrNotGroupBox.Enabled = false;
-                    DateCheckbox.Enabled = false;
-                    FileNameCheckbox.Enabled = false;
-                    resultTypeCheckbox.Enabled = false;
-                    ipCheckbox.Enabled = false;
-                    ChoseFileGroupbox.Enabled = false;
+                        MailAddress Email = Form2.getEmail();
 
-                    FileInfoRadioButton.Checked = false;
-                    FileInfoRadioButton.Enabled = false;
+                        backgroundWatcher = LogFile.MakeBackgroundWatcher(logFile, notifyIcon1, Email);
+                        backgroundWatcher.LogWatcherON();
+                        backgroundWatcher.addDangerousIp += DisplayDangerousRequests;
+                        logFile.isBackgroundWatcherON = true;
 
-                    AnalysisTextBox.Enabled = true;
-                    AnalysisTextBox.Text = "";
-                    SecurityAnalysisButton.Enabled = false;
+                        BackgroundModeActive.Text = "Деактивировать";
 
-                    HackingStatiscticsRadiobutton.Enabled = true;
-                    HackingStatiscticsRadiobutton.Checked = true;
-                    richTextBox1.Text = "Фоновый режим активирован. Чтобы выйти - нажмите \"Деактивировать\"";
-                    AnalysisTextBox.Text = "Угроз не обнаружено, но мы продолжаем работать в этом направлении.";
-                    this.WindowState = FormWindowState.Minimized;
+                        SearchButton.Enabled = false;
+                        searchAllFileOrNotGroupBox.Enabled = false;
+                        DateCheckbox.Enabled = false;
+                        FileNameCheckbox.Enabled = false;
+                        resultTypeCheckbox.Enabled = false;
+                        ipCheckbox.Enabled = false;
+                        ChoseFileGroupbox.Enabled = false;
 
-                    //WindowState = FormWindowState.Minimized;
-                    notifyIcon1.Icon = SystemIcons.Application;
-                    notifyIcon1.Visible = true;
-                    BackgroundWatcher.makeNotify(notifyIcon1, "log VnVlyzer переведен в фоновый режим");
-                    //Form1_Deactivate(sender, e);
-                }
+                        FileInfoRadioButton.Checked = false;
+                        FileInfoRadioButton.Enabled = false;
+
+                        AnalysisTextBox.Enabled = true;
+                        AnalysisTextBox.Text = "";
+                        SecurityAnalysisButton.Enabled = false;
+
+                        HackingStatiscticsRadiobutton.Enabled = true;
+                        HackingStatiscticsRadiobutton.Checked = true;
+                        richTextBox1.Text = "Фоновый режим активирован. Чтобы выйти - нажмите \"Деактивировать\"";
+                        AnalysisTextBox.Text = "Угроз не обнаружено, но мы продолжаем работать в этом направлении.";
+                        this.WindowState = FormWindowState.Minimized;
+
+                        //WindowState = FormWindowState.Minimized;
+                        notifyIcon1.Icon = SystemIcons.Application;
+                        notifyIcon1.Visible = true;
+                        BackgroundWatcher.makeNotify(notifyIcon1, "log VnVlyzer переведен в фоновый режим");
+                        //Form1_Deactivate(sender, e);
+                    }
+                
                 else
                     return;
             }
@@ -499,5 +510,23 @@ namespace Coursework_main
 
         //}
     }
-
+    public static class Prompt
+    {
+        public static string ShowDialog(string caption)
+        {
+            Form prompt = new Form();
+            prompt.Width = 400;
+            prompt.Height = 300;
+            prompt.Text = caption;
+            Label textLabel = new Label() { Left = 50, Top = 20, Text = "Введите ваш email аддрес, чтобы всегда узнавать об угрозах.\"n\"Или оставьте его пустым"};
+            TextBox inputBox = new TextBox() { Left = 50, Top = 50, Width = 200 };
+            Button confirmation = new Button() { Text = "Ok", Left = 150, Width = 100, Top = 70 };
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(inputBox);
+            prompt.ShowDialog();
+            return inputBox.Text;
+        }
+    }
 }

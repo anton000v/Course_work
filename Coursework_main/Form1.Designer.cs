@@ -66,6 +66,9 @@ namespace Coursework_main
             this.BackgroundModeActive = new System.Windows.Forms.Button();
             this.backgroundModeGroupBox = new System.Windows.Forms.GroupBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.DateGroupBox.SuspendLayout();
             this.FileNameGroupBox.SuspendLayout();
             this.typeResultGroupBox.SuspendLayout();
@@ -458,6 +461,31 @@ namespace Coursework_main
             this.notifyIcon1.Text = "log VnAlyzer";
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(962, 577);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(150, 20);
+            this.textBox1.TabIndex = 33;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(854, 571);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(102, 13);
+            this.label6.TabIndex = 34;
+            this.label6.Text = "Введите ваш email ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(848, 584);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(108, 13);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "и знайте об угрозах";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -465,6 +493,9 @@ namespace Coursework_main
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1138, 603);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.backgroundModeGroupBox);
             this.Controls.Add(this.FileInfoRadioButton);
             this.Controls.Add(this.HackingStatiscticsRadiobutton);
@@ -484,6 +515,7 @@ namespace Coursework_main
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SearchButton);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "log VnVlyzer";
@@ -551,6 +583,9 @@ namespace Coursework_main
         private System.Windows.Forms.Button BackgroundModeActive;
         private System.Windows.Forms.GroupBox backgroundModeGroupBox;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
 

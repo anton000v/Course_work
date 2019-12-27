@@ -6,7 +6,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-
+using System.Net.Mail;
+using System.Net;
 
 namespace Coursework_main
 {
@@ -401,9 +402,9 @@ namespace Coursework_main
             return dangerousRequests;
         }
 
-        public static BackgroundWatcher MakeBackgroundWatcher(LogFile logFile,NotifyIcon notifyIcon1)
+        public static BackgroundWatcher MakeBackgroundWatcher(LogFile logFile,NotifyIcon notifyIcon1, MailAddress mail = null)
         {
-            BackgroundWatcher bgw = new BackgroundWatcher(logFile,notifyIcon1);
+            BackgroundWatcher bgw = new BackgroundWatcher(logFile,notifyIcon1,mail);
             return bgw;
         }
     }
@@ -856,6 +857,8 @@ namespace Coursework_main
 
         private LogFile logfile;
 
+        private MailAddress mailAddress;
+
         public DangerousHTTPRequests dangerousRequests;
 
 
@@ -875,7 +878,7 @@ namespace Coursework_main
         //    //recordsList = new List<OneRecord>();
         //    filteredRecords = new FilteredRecords();
         //}
-        public BackgroundWatcher(LogFile lf,NotifyIcon notifyIcon)
+        public BackgroundWatcher(LogFile lf,NotifyIcon notifyIcon, MailAddress mail = null)
         {
             //recordsList = new List<OneRecord>();
             filteredRecords = new FilteredRecords();
@@ -886,6 +889,7 @@ namespace Coursework_main
             //lineNumbers = 0;
             //DangerousIpSize = 0;
             dangerousRequests = new DangerousHTTPRequests();
+            mailAddress = mail;
         }
 
         public void LogWatcherON()
@@ -903,7 +907,7 @@ namespace Coursework_main
         }
         private void RunWatcher()
         {
-           
+            
             watcher = new FileSystemWatcher { Path = logfile.onlyFilePath, Filter = logfile.onlyFileName };
             fillFilteredRecords();
             watcher.Changed += new FileSystemEventHandler(WatcherChanged);
@@ -954,7 +958,9 @@ namespace Coursework_main
                         { 
                             BackgroundWatcher.makeNotify(notifyIcon1, String.Format("ip: {0} взламывает ваш ресурс прямо сейчас!",keyValue.Key));
                             isHackerDetected = true;
-                            }
+                            if(mailAddress != null)
+                                SendEmail(keyValue.Key);
+                        }
                         if (!dangerousRequests.DangerousIp.ContainsKey(keyValue.Key))
                         {
                             if(!isHackerDetected)
@@ -1075,8 +1081,7 @@ namespace Coursework_main
             //    //fs.BaseStream.Flush();
             //    return System.Text.Encoding.UTF8.GetString(bytes);
             //}
-            try
-            {
+
                 if(BackgroundWatcher.IsFileClosed(path, true))
                 {
                     using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read))
@@ -1101,14 +1106,6 @@ namespace Coursework_main
                         return System.Text.Encoding.UTF8.GetString(bytes);
                     }
                 }
-            }
-
-
-            catch (Exception ex)
-            {
-                //if (ex.HResult == -2147024894)
-                return "error";
-            }
             return "";
             //fs.Close();
 
@@ -1162,6 +1159,27 @@ namespace Coursework_main
             notifyIcon1.ShowBalloonTip(time);
         }
 
+        public void SendEmail(string ip)
+        {
+            // отправитель - устанавливаем адрес и отображаемое в письме имя
+            MailAddress from = new MailAddress("logvnvlyzer@gmail.com", "log VnVlyzer");
+            // кому отправляем
+            MailAddress to = mailAddress;
+            // создаем объект сообщения
+            MailMessage m = new MailMessage(from, to);
+            // тема письма
+            m.Subject = "На вашем ресурсе обнаружен вредитель!";
+            // текст письма
+            m.Body = String.Format("<h2>Мы поймали на вашем ресурсе розбийныка!<br>Его ip - {0}", ip);
+            // письмо представляет код html
+            m.IsBodyHtml = true;
+            // адрес smtp-сервера и порт, с которого будем отправлять письмо
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 25);
+            // логин и пароль
+            smtp.Credentials = new NetworkCredential("logvnvlyzer@gmail.com", "a_qwerty");
+            smtp.EnableSsl = true;
+            smtp.Send(m);
+        }
 
     }
 }
