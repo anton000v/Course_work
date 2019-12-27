@@ -93,7 +93,7 @@ namespace Coursework_main
 
             int lastRecords = -1;
 
-            if (logFile == null)
+            if (logFile.fileName == null)
             {
                 MessageBox.Show("Пожалуйста, выберите файл.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -226,7 +226,7 @@ namespace Coursework_main
             //Refresh();
             logFile = new LogFile();
             FileNameShowTextBox.Text = logFile.onlyFileName;
-            if (logFile != null)
+            if (logFile.fileName != null)
             {
                 backgroundModeGroupBox.Visible = true;
                 BackgroundModeActive.Visible = true;
@@ -324,13 +324,23 @@ namespace Coursework_main
             if (HackingStatiscticsRadiobutton.Checked)
             {
                 //AnalysisTextBox.Text = "";
-                dangerousRequests.writeDangerousRequestsToWindow(AnalysisTextBox);
+                if(!logFile.isBackgroundWatcherON)
+                    dangerousRequests.writeDangerousRequestsToWindow(AnalysisTextBox);
             }
             else
             {
                 AnalysisTextBox.Text = "";
                 //FileInfoRadioButton.Checked = false;
             }
+        }
+
+
+        private void DisplayDangerousRequests()
+        {
+            //DangerousHTTPRequests dangerousHTTPRequests = backgroundWatcher.dangerousRequests;
+            //dangerousHTTPRequests.writeDangerousRequestsToWindow(AnalysisTextBox);
+
+            backgroundWatcher.WriteDangerousRequest_InBackgroundMode_ToWindow(AnalysisTextBox);
         }
 
         private void BackgroundModeActive_Click(object sender, EventArgs e)
@@ -340,13 +350,38 @@ namespace Coursework_main
                 DialogResult logWatcherOnDialogResult =  MessageBox.Show(String.Format("Вы действительно хотите активировать фоновый режим, анализирующий файл \"{0}\"?", logFile.onlyFileName), "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (logWatcherOnDialogResult == DialogResult.Yes)
                 {
-                    logFile.LogWatcherON();
+                    backgroundWatcher = LogFile.MakeBackgroundWatcher(logFile,notifyIcon1);
+                    backgroundWatcher.LogWatcherON();
+                    backgroundWatcher.addDangerousIp += DisplayDangerousRequests;
+                    logFile.isBackgroundWatcherON = true;
+
                     BackgroundModeActive.Text = "Деактивировать";
+
+                    SearchButton.Enabled = false;
+                    searchAllFileOrNotGroupBox.Enabled = false;
+                    DateCheckbox.Enabled = false;
+                    FileNameCheckbox.Enabled = false;
+                    resultTypeCheckbox.Enabled = false;
+                    ipCheckbox.Enabled = false;
+                    ChoseFileGroupbox.Enabled = false;
+
+                    FileInfoRadioButton.Checked = false;
+                    FileInfoRadioButton.Enabled = false;
+
+                    AnalysisTextBox.Enabled = true;
+                    AnalysisTextBox.Text = "";
+                    SecurityAnalysisButton.Enabled = false;
+
+                    HackingStatiscticsRadiobutton.Enabled = true;
+                    HackingStatiscticsRadiobutton.Checked = true;
+                    richTextBox1.Text = "Фоновый режим активирован. Чтобы выйти - нажмите \"Деактивировать\"";
+                    AnalysisTextBox.Text = "Угроз не обнаружено, но мы продолжаем работать в этом направлении.";
+                    this.WindowState = FormWindowState.Minimized;
+
                     //WindowState = FormWindowState.Minimized;
                     notifyIcon1.Icon = SystemIcons.Application;
                     notifyIcon1.Visible = true;
-                    notifyIcon1.BalloonTipText = "log VnVlyzer переведен в фоновый режим";
-                    notifyIcon1.ShowBalloonTip(1000);
+                    BackgroundWatcher.makeNotify(notifyIcon1, "log VnVlyzer переведен в фоновый режим");
                     //Form1_Deactivate(sender, e);
                 }
                 else
@@ -357,10 +392,23 @@ namespace Coursework_main
                 DialogResult logWatcherOnDialogResult = MessageBox.Show(String.Format("Вы действительно хотите деактивировать фоновый режим, анализирующий файл \"{0}\"?", logFile.onlyFileName), "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (logWatcherOnDialogResult == DialogResult.Yes)
                 {
-                    logFile.LogWatcherOFF();
+                    backgroundWatcher.LogWatcherOFF();
                     BackgroundModeActive.Text = "Активировать";
-                    notifyIcon1.BalloonTipText = "log VnVlyzer переведен в обычный режим";
-                    notifyIcon1.ShowBalloonTip(1000);
+                    logFile.isBackgroundWatcherON = false;
+                    SearchButton.Enabled = true;
+                    searchAllFileOrNotGroupBox.Enabled = true;
+                    DateCheckbox.Enabled = true;
+                    FileNameCheckbox.Enabled = true;
+                    resultTypeCheckbox.Enabled = true;
+                    ipCheckbox.Enabled = true;
+                    ChoseFileGroupbox.Enabled = true;
+                    HackingStatiscticsRadiobutton.Enabled = false;
+                    HackingStatiscticsRadiobutton.Checked = false;
+
+                    richTextBox1.Text = "";
+                    AnalysisTextBox.Text = "";
+                    
+                    BackgroundWatcher.makeNotify(notifyIcon1, "log VnVlyzer переведен в обычный режим");
                     notifyIcon1.Visible = false;
 
                 }
@@ -419,9 +467,37 @@ namespace Coursework_main
 
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
-                //notifyIcon1.Visible = ;
-            
+
+                SecurityAnalysisButton.Enabled = true;
+
+                if (backgroundWatcher.dangerousRequests.DangerousIp.Count()>0)
+                {
+
+                    //backgroundWatcher.WriteDangerousRequest_InBackgroundMode_ToWindow(AnalysisTextBox);
+                }
+
+            //notifyIcon1.Visible = ;
+
         }
+        //public void writeToAnalisisTextBox()
+        //{
+        //    //this.WindowState = FormWindowState.Normal;
+
+        //    //if (this.Visible == Hide)
+        //    //{
+        //    if (notifyIcon1.Visible)
+        //    {
+
+        //        //AnalysisTextBox.Enabled = true;
+        //        //AnalysisTextBox.Text = "[Номер]  [ip] - [Вероятность попытки взлома]\n\n";
+        //        DangerousHTTPRequests dangerousHTTPRequests = backgroundWatcher.dangerousRequests;
+        //        dangerousHTTPRequests.writeDangerousRequestsToWindow(AnalysisTextBox);
+        //        //backgroundWatcher.WriteDangerousRequest_InBackgroundMode_ToWindow(AnalysisTextBox);
+
+        //    }
+        //    //notifyIcon1.Visible = ;
+
+        //}
     }
 
 }

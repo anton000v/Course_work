@@ -200,6 +200,7 @@ namespace Coursework_main
             // 
             // ResultTypeComboBox
             // 
+            this.ResultTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ResultTypeComboBox.FormattingEnabled = true;
             this.ResultTypeComboBox.Location = new System.Drawing.Point(122, 19);
             this.ResultTypeComboBox.Name = "ResultTypeComboBox";
@@ -527,6 +528,10 @@ namespace Coursework_main
         public DangerousHTTPRequests dangerousRequests;
         public FilteredRecords filteredRecords;
         public Dictionary<int, string> httpResultTypes = OneRecord.GetHTTPResultValidTypes();
+        BackgroundWatcher backgroundWatcher;
+
+        public delegate void RTChangeText(string sText);
+
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox FileNameShowTextBox;
