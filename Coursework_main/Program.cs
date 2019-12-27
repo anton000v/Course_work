@@ -6,7 +6,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Diagnostics;
+
+
 namespace Coursework_main
 {
     static class Program
@@ -1160,5 +1161,7 @@ namespace Coursework_main
             notifyIcon1.BalloonTipText = text;
             notifyIcon1.ShowBalloonTip(time);
         }
+
+
     }
 }
