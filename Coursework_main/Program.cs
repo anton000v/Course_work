@@ -955,11 +955,16 @@ namespace Coursework_main
                     {
                         bool isHackerDetected = false;
                         if(keyValue.Value == 100)
-                        { 
-                            BackgroundWatcher.makeNotify(notifyIcon1, String.Format("ip: {0} взламывает ваш ресурс прямо сейчас!",keyValue.Key));
-                            isHackerDetected = true;
-                            if(mailAddress != null)
+                        {
+                            if (mailAddress != null)
+                            {
                                 SendEmail(keyValue.Key);
+                                BackgroundWatcher.makeNotify(notifyIcon1, String.Format("ip: {0} взламывает ваш ресурс прямо сейчас! Мы отправили уведомление на вашу почту!", keyValue.Key));
+                            }
+                            else
+                                BackgroundWatcher.makeNotify(notifyIcon1, String.Format("ip: {0} взламывает ваш ресурс прямо сейчас!",keyValue.Key));
+                            isHackerDetected = true;
+
                         }
                         if (!dangerousRequests.DangerousIp.ContainsKey(keyValue.Key))
                         {
@@ -1170,7 +1175,7 @@ namespace Coursework_main
             // тема письма
             m.Subject = "На вашем ресурсе обнаружен вредитель!";
             // текст письма
-            m.Body = String.Format("<h2>Мы поймали на вашем ресурсе розбийныка!<br>Его ip - {0}", ip);
+            m.Body = String.Format("<h2>Мы поймали на вашем ресурсе розбийныка!<br>Его ip - <p style=\"color:red\">{0}</p>", ip);
             // письмо представляет код html
             m.IsBodyHtml = true;
             // адрес smtp-сервера и порт, с которого будем отправлять письмо
