@@ -80,7 +80,7 @@ namespace Coursework_main
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(88, 577);
+            this.SearchButton.Location = new System.Drawing.Point(106, 601);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(106, 38);
             this.SearchButton.TabIndex = 1;
@@ -91,26 +91,26 @@ namespace Coursework_main
             // MinDateTimePicker
             // 
             this.MinDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinDateTimePicker.Location = new System.Drawing.Point(27, 29);
+            this.MinDateTimePicker.Location = new System.Drawing.Point(45, 28);
             this.MinDateTimePicker.Name = "MinDateTimePicker";
-            this.MinDateTimePicker.Size = new System.Drawing.Size(193, 20);
+            this.MinDateTimePicker.Size = new System.Drawing.Size(193, 24);
             this.MinDateTimePicker.TabIndex = 2;
             // 
             // maxDateTimePicker
             // 
             this.maxDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maxDateTimePicker.Location = new System.Drawing.Point(27, 64);
+            this.maxDateTimePicker.Location = new System.Drawing.Point(45, 64);
             this.maxDateTimePicker.Name = "maxDateTimePicker";
-            this.maxDateTimePicker.Size = new System.Drawing.Size(193, 20);
+            this.maxDateTimePicker.Size = new System.Drawing.Size(193, 24);
             this.maxDateTimePicker.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(82, 153);
+            this.label1.Location = new System.Drawing.Point(86, 164);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 31);
+            this.label1.Size = new System.Drawing.Size(170, 40);
             this.label1.TabIndex = 4;
             this.label1.Text = "Фильтры";
             // 
@@ -122,9 +122,9 @@ namespace Coursework_main
             this.DateGroupBox.Controls.Add(this.maxDateTimePicker);
             this.DateGroupBox.Enabled = false;
             this.DateGroupBox.Font = new System.Drawing.Font("OCR A Extended", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DateGroupBox.Location = new System.Drawing.Point(30, 183);
+            this.DateGroupBox.Location = new System.Drawing.Point(30, 207);
             this.DateGroupBox.Name = "DateGroupBox";
-            this.DateGroupBox.Size = new System.Drawing.Size(226, 100);
+            this.DateGroupBox.Size = new System.Drawing.Size(244, 99);
             this.DateGroupBox.TabIndex = 6;
             this.DateGroupBox.TabStop = false;
             this.DateGroupBox.Text = "Дата";
@@ -133,18 +133,18 @@ namespace Coursework_main
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 33);
+            this.label3.Location = new System.Drawing.Point(6, 33);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(14, 13);
+            this.label3.Size = new System.Drawing.Size(17, 18);
             this.label3.TabIndex = 5;
             this.label3.Text = "С";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 71);
+            this.label2.Location = new System.Drawing.Point(4, 69);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 13);
+            this.label2.Size = new System.Drawing.Size(26, 18);
             this.label2.TabIndex = 4;
             this.label2.Text = "По";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -152,9 +152,10 @@ namespace Coursework_main
             // DateCheckbox
             // 
             this.DateCheckbox.AutoSize = true;
-            this.DateCheckbox.Location = new System.Drawing.Point(262, 232);
+            this.DateCheckbox.Enabled = false;
+            this.DateCheckbox.Location = new System.Drawing.Point(280, 256);
             this.DateCheckbox.Name = "DateCheckbox";
-            this.DateCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.DateCheckbox.Size = new System.Drawing.Size(18, 17);
             this.DateCheckbox.TabIndex = 6;
             this.DateCheckbox.UseVisualStyleBackColor = true;
             this.DateCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
@@ -162,9 +163,10 @@ namespace Coursework_main
             // FileNameCheckbox
             // 
             this.FileNameCheckbox.AutoSize = true;
-            this.FileNameCheckbox.Location = new System.Drawing.Point(262, 322);
+            this.FileNameCheckbox.Enabled = false;
+            this.FileNameCheckbox.Location = new System.Drawing.Point(280, 346);
             this.FileNameCheckbox.Name = "FileNameCheckbox";
-            this.FileNameCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.FileNameCheckbox.Size = new System.Drawing.Size(18, 17);
             this.FileNameCheckbox.TabIndex = 7;
             this.FileNameCheckbox.UseVisualStyleBackColor = true;
             this.FileNameCheckbox.CheckedChanged += new System.EventHandler(this.FileNameCheckbox_CheckedChanged);
@@ -173,7 +175,7 @@ namespace Coursework_main
             // 
             this.FileNameTextBox.Location = new System.Drawing.Point(122, 19);
             this.FileNameTextBox.Name = "FileNameTextBox";
-            this.FileNameTextBox.Size = new System.Drawing.Size(100, 21);
+            this.FileNameTextBox.Size = new System.Drawing.Size(100, 25);
             this.FileNameTextBox.TabIndex = 8;
             this.FileNameTextBox.TextChanged += new System.EventHandler(this.FileNameTextBox_TextChanged);
             // 
@@ -182,9 +184,9 @@ namespace Coursework_main
             this.FileNameGroupBox.Controls.Add(this.FileNameTextBox);
             this.FileNameGroupBox.Enabled = false;
             this.FileNameGroupBox.Font = new System.Drawing.Font("OCR A Extended", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FileNameGroupBox.Location = new System.Drawing.Point(30, 300);
+            this.FileNameGroupBox.Location = new System.Drawing.Point(30, 312);
             this.FileNameGroupBox.Name = "FileNameGroupBox";
-            this.FileNameGroupBox.Size = new System.Drawing.Size(226, 51);
+            this.FileNameGroupBox.Size = new System.Drawing.Size(244, 63);
             this.FileNameGroupBox.TabIndex = 9;
             this.FileNameGroupBox.TabStop = false;
             this.FileNameGroupBox.Text = "Имя файла";
@@ -193,9 +195,9 @@ namespace Coursework_main
             // 
             this.typeResultGroupBox.Controls.Add(this.ResultTypeComboBox);
             this.typeResultGroupBox.Enabled = false;
-            this.typeResultGroupBox.Location = new System.Drawing.Point(30, 357);
+            this.typeResultGroupBox.Location = new System.Drawing.Point(30, 381);
             this.typeResultGroupBox.Name = "typeResultGroupBox";
-            this.typeResultGroupBox.Size = new System.Drawing.Size(226, 48);
+            this.typeResultGroupBox.Size = new System.Drawing.Size(244, 48);
             this.typeResultGroupBox.TabIndex = 11;
             this.typeResultGroupBox.TabStop = false;
             this.typeResultGroupBox.Text = "Тип результата";
@@ -204,17 +206,18 @@ namespace Coursework_main
             // 
             this.ResultTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ResultTypeComboBox.FormattingEnabled = true;
-            this.ResultTypeComboBox.Location = new System.Drawing.Point(122, 19);
+            this.ResultTypeComboBox.Location = new System.Drawing.Point(122, 14);
             this.ResultTypeComboBox.Name = "ResultTypeComboBox";
-            this.ResultTypeComboBox.Size = new System.Drawing.Size(100, 21);
+            this.ResultTypeComboBox.Size = new System.Drawing.Size(100, 25);
             this.ResultTypeComboBox.TabIndex = 0;
             // 
             // resultTypeCheckbox
             // 
             this.resultTypeCheckbox.AutoSize = true;
-            this.resultTypeCheckbox.Location = new System.Drawing.Point(262, 379);
+            this.resultTypeCheckbox.Enabled = false;
+            this.resultTypeCheckbox.Location = new System.Drawing.Point(280, 403);
             this.resultTypeCheckbox.Name = "resultTypeCheckbox";
-            this.resultTypeCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.resultTypeCheckbox.Size = new System.Drawing.Size(18, 17);
             this.resultTypeCheckbox.TabIndex = 12;
             this.resultTypeCheckbox.UseVisualStyleBackColor = true;
             this.resultTypeCheckbox.CheckedChanged += new System.EventHandler(this.resultTypeCheckbox_CheckedChanged);
@@ -223,9 +226,9 @@ namespace Coursework_main
             // 
             this.IpGroupBox.Controls.Add(this.IpTextBox);
             this.IpGroupBox.Enabled = false;
-            this.IpGroupBox.Location = new System.Drawing.Point(30, 411);
+            this.IpGroupBox.Location = new System.Drawing.Point(30, 435);
             this.IpGroupBox.Name = "IpGroupBox";
-            this.IpGroupBox.Size = new System.Drawing.Size(226, 42);
+            this.IpGroupBox.Size = new System.Drawing.Size(244, 61);
             this.IpGroupBox.TabIndex = 13;
             this.IpGroupBox.TabStop = false;
             this.IpGroupBox.Text = "Исходный IP";
@@ -233,17 +236,18 @@ namespace Coursework_main
             // 
             // IpTextBox
             // 
-            this.IpTextBox.Location = new System.Drawing.Point(122, 16);
+            this.IpTextBox.Location = new System.Drawing.Point(122, 23);
             this.IpTextBox.Name = "IpTextBox";
-            this.IpTextBox.Size = new System.Drawing.Size(100, 20);
+            this.IpTextBox.Size = new System.Drawing.Size(100, 24);
             this.IpTextBox.TabIndex = 0;
             // 
             // ipCheckbox
             // 
             this.ipCheckbox.AutoSize = true;
-            this.ipCheckbox.Location = new System.Drawing.Point(262, 430);
+            this.ipCheckbox.Enabled = false;
+            this.ipCheckbox.Location = new System.Drawing.Point(280, 458);
             this.ipCheckbox.Name = "ipCheckbox";
-            this.ipCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.ipCheckbox.Size = new System.Drawing.Size(18, 17);
             this.ipCheckbox.TabIndex = 14;
             this.ipCheckbox.UseVisualStyleBackColor = true;
             this.ipCheckbox.CheckedChanged += new System.EventHandler(this.ipCheckbox_CheckedChanged);
@@ -266,24 +270,24 @@ namespace Coursework_main
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(6, 25);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(84, 13);
+            this.label4.Size = new System.Drawing.Size(115, 18);
             this.label4.TabIndex = 17;
             this.label4.Text = "Сейчас выбран";
             // 
             // FileNameShowTextBox
             // 
             this.FileNameShowTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FileNameShowTextBox.Location = new System.Drawing.Point(98, 22);
+            this.FileNameShowTextBox.Location = new System.Drawing.Point(120, 22);
             this.FileNameShowTextBox.Name = "FileNameShowTextBox";
             this.FileNameShowTextBox.ReadOnly = true;
-            this.FileNameShowTextBox.Size = new System.Drawing.Size(100, 20);
+            this.FileNameShowTextBox.Size = new System.Drawing.Size(100, 24);
             this.FileNameShowTextBox.TabIndex = 18;
             this.FileNameShowTextBox.Text = "Не выбрано";
             // 
             // ChoseFileButton
             // 
             this.ChoseFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChoseFileButton.Location = new System.Drawing.Point(34, 48);
+            this.ChoseFileButton.Location = new System.Drawing.Point(45, 60);
             this.ChoseFileButton.Name = "ChoseFileButton";
             this.ChoseFileButton.Size = new System.Drawing.Size(134, 39);
             this.ChoseFileButton.TabIndex = 19;
@@ -308,6 +312,7 @@ namespace Coursework_main
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(21, 21);
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             this.contextMenuStrip1.Text = "Справки";
@@ -317,7 +322,7 @@ namespace Coursework_main
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(160, 45);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.Size = new System.Drawing.Size(63, 18);
             this.label5.TabIndex = 23;
             this.label5.Text = "строках";
             this.label5.Click += new System.EventHandler(this.label5_Click_1);
@@ -329,7 +334,7 @@ namespace Coursework_main
             this.checkAllFileCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkAllFileCheckbox.Location = new System.Drawing.Point(0, 19);
             this.checkAllFileCheckbox.Name = "checkAllFileCheckbox";
-            this.checkAllFileCheckbox.Size = new System.Drawing.Size(103, 17);
+            this.checkAllFileCheckbox.Size = new System.Drawing.Size(138, 22);
             this.checkAllFileCheckbox.TabIndex = 24;
             this.checkAllFileCheckbox.Text = "Во всем файле";
             this.checkAllFileCheckbox.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -341,7 +346,7 @@ namespace Coursework_main
             this.checkLastNRecordsCheckbox.AutoSize = true;
             this.checkLastNRecordsCheckbox.Location = new System.Drawing.Point(0, 45);
             this.checkLastNRecordsCheckbox.Name = "checkLastNRecordsCheckbox";
-            this.checkLastNRecordsCheckbox.Size = new System.Drawing.Size(92, 17);
+            this.checkLastNRecordsCheckbox.Size = new System.Drawing.Size(122, 22);
             this.checkLastNRecordsCheckbox.TabIndex = 25;
             this.checkLastNRecordsCheckbox.Text = "В последних ";
             this.checkLastNRecordsCheckbox.UseVisualStyleBackColor = true;
@@ -353,9 +358,9 @@ namespace Coursework_main
             this.searchAllFileOrNotGroupBox.Controls.Add(this.checkAllFileCheckbox);
             this.searchAllFileOrNotGroupBox.Controls.Add(this.checkLastNRecordsCheckbox);
             this.searchAllFileOrNotGroupBox.Controls.Add(this.label5);
-            this.searchAllFileOrNotGroupBox.Location = new System.Drawing.Point(30, 459);
+            this.searchAllFileOrNotGroupBox.Location = new System.Drawing.Point(30, 502);
             this.searchAllFileOrNotGroupBox.Name = "searchAllFileOrNotGroupBox";
-            this.searchAllFileOrNotGroupBox.Size = new System.Drawing.Size(226, 79);
+            this.searchAllFileOrNotGroupBox.Size = new System.Drawing.Size(244, 79);
             this.searchAllFileOrNotGroupBox.TabIndex = 26;
             this.searchAllFileOrNotGroupBox.TabStop = false;
             this.searchAllFileOrNotGroupBox.Text = "Производить поиск";
@@ -375,7 +380,7 @@ namespace Coursework_main
             0,
             0});
             this.CheckLastRecordsNumericUpDown.Name = "CheckLastRecordsNumericUpDown";
-            this.CheckLastRecordsNumericUpDown.Size = new System.Drawing.Size(50, 20);
+            this.CheckLastRecordsNumericUpDown.Size = new System.Drawing.Size(50, 24);
             this.CheckLastRecordsNumericUpDown.TabIndex = 26;
             this.CheckLastRecordsNumericUpDown.Value = new decimal(new int[] {
             1,
@@ -401,7 +406,7 @@ namespace Coursework_main
             this.AnalysisTextBox.Location = new System.Drawing.Point(986, 55);
             this.AnalysisTextBox.Name = "AnalysisTextBox";
             this.AnalysisTextBox.ReadOnly = true;
-            this.AnalysisTextBox.Size = new System.Drawing.Size(252, 483);
+            this.AnalysisTextBox.Size = new System.Drawing.Size(356, 483);
             this.AnalysisTextBox.TabIndex = 28;
             this.AnalysisTextBox.Text = "";
             // 
@@ -409,9 +414,9 @@ namespace Coursework_main
             // 
             this.HackingStatiscticsRadiobutton.AutoSize = true;
             this.HackingStatiscticsRadiobutton.Enabled = false;
-            this.HackingStatiscticsRadiobutton.Location = new System.Drawing.Point(1126, 34);
+            this.HackingStatiscticsRadiobutton.Location = new System.Drawing.Point(1176, 34);
             this.HackingStatiscticsRadiobutton.Name = "HackingStatiscticsRadiobutton";
-            this.HackingStatiscticsRadiobutton.Size = new System.Drawing.Size(124, 17);
+            this.HackingStatiscticsRadiobutton.Size = new System.Drawing.Size(166, 22);
             this.HackingStatiscticsRadiobutton.TabIndex = 30;
             this.HackingStatiscticsRadiobutton.TabStop = true;
             this.HackingStatiscticsRadiobutton.Text = "Статистика взлома";
@@ -424,7 +429,7 @@ namespace Coursework_main
             this.FileInfoRadioButton.Enabled = false;
             this.FileInfoRadioButton.Location = new System.Drawing.Point(986, 34);
             this.FileInfoRadioButton.Name = "FileInfoRadioButton";
-            this.FileInfoRadioButton.Size = new System.Drawing.Size(135, 17);
+            this.FileInfoRadioButton.Size = new System.Drawing.Size(184, 22);
             this.FileInfoRadioButton.TabIndex = 31;
             this.FileInfoRadioButton.TabStop = true;
             this.FileInfoRadioButton.Text = "Информация о файле";
@@ -445,7 +450,7 @@ namespace Coursework_main
             // backgroundModeGroupBox
             // 
             this.backgroundModeGroupBox.Controls.Add(this.BackgroundModeActive);
-            this.backgroundModeGroupBox.Location = new System.Drawing.Point(1107, 578);
+            this.backgroundModeGroupBox.Location = new System.Drawing.Point(1199, 596);
             this.backgroundModeGroupBox.Name = "backgroundModeGroupBox";
             this.backgroundModeGroupBox.Size = new System.Drawing.Size(143, 59);
             this.backgroundModeGroupBox.TabIndex = 32;
@@ -464,10 +469,10 @@ namespace Coursework_main
             // Form1
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1260, 641);
+            this.ClientSize = new System.Drawing.Size(1387, 696);
             this.Controls.Add(this.backgroundModeGroupBox);
             this.Controls.Add(this.FileInfoRadioButton);
             this.Controls.Add(this.HackingStatiscticsRadiobutton);

@@ -99,7 +99,7 @@ namespace Coursework_main
 
             int lastRecords = -1;
 
-            if (logFile.fileName == null)
+            if (logFile == null || logFile.fileName == null)
             {
                 MessageBox.Show("Пожалуйста, выберите файл.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -236,6 +236,10 @@ namespace Coursework_main
             {
                 backgroundModeGroupBox.Visible = true;
                 BackgroundModeActive.Visible = true;
+                DateCheckbox.Enabled = true;
+                ipCheckbox.Enabled = true;
+                resultTypeCheckbox.Enabled = true;
+                FileNameCheckbox.Enabled = true;
             }
         }
 
