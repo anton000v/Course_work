@@ -155,9 +155,9 @@ namespace Coursework_main
                 DialogResult ReadAllFileDialogResult = MessageBox.Show("Вы не выбрали ни один из фильтров. Файл может быть очень большим.\nВы уверены, что хотите прочитать его весь?", "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (ReadAllFileDialogResult == DialogResult.Yes)
                 {
-                    richTextBox1.Text = "";
+                    //richTextBox1.Text = "";
                     //logFile.isWholeFileRead = true;
-                    logFile.writeFileToWindow(richTextBox1);
+                    logFile.writeFileToWindow(RequestsOutputDataGrid);
 
                     logFile.isFilterModeActive = false;
 
@@ -182,9 +182,9 @@ namespace Coursework_main
             }
             if(allFiltersFilled)
             {
-                richTextBox1.Text = "";
+                //richTextBox1.Text = "";
                 filteredRecords = logFile.Filter(minDate, maxDate, fileName, resultType, ip, lastRecords);
-                filteredRecords.WriteFilterRecordsToWindow(richTextBox1);
+                filteredRecords.WriteFilterRecordsToWindow(RequestsOutputDataGrid);
 
                 logFile.isFilterModeActive = true;
 
@@ -230,17 +230,22 @@ namespace Coursework_main
         private void ChoseFileButton_Click(object sender, EventArgs e)
         {
             //Refresh();
-            logFile = new LogFile();
-            FileNameShowTextBox.Text = logFile.onlyFileName;
-            if (logFile.fileName != null)
+            if (notifyIcon1.Visible == false)
             {
-                backgroundModeGroupBox.Visible = true;
-                BackgroundModeActive.Visible = true;
-                DateCheckbox.Enabled = true;
-                ipCheckbox.Enabled = true;
-                resultTypeCheckbox.Enabled = true;
-                FileNameCheckbox.Enabled = true;
+                logFile = new LogFile();
+                FileNameShowTextBox.Text = logFile.onlyFileName;
+                if (logFile.fileName != null)
+                {
+                    backgroundModeGroupBox.Visible = true;
+                    BackgroundModeActive.Visible = true;
+                    DateCheckbox.Enabled = true;
+                    ipCheckbox.Enabled = true;
+                    resultTypeCheckbox.Enabled = true;
+                    FileNameCheckbox.Enabled = true;
+                }
             }
+            else
+               MessageBox.Show("Сначала деактивируйте фоновый режим", "Ошибочка", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void FileNameTextBox_TextChanged(object sender, EventArgs e)
@@ -388,8 +393,8 @@ namespace Coursework_main
 
                         HackingStatiscticsRadiobutton.Enabled = true;
                         HackingStatiscticsRadiobutton.Checked = true;
-                        richTextBox1.Text = "Фоновый режим активирован. Чтобы выйти - нажмите \"Деактивировать\"";
-                        AnalysisTextBox.Text = "Угроз не обнаружено, но мы продолжаем работать в этом направлении.";
+                        AnalysisTextBox.Text = "Фоновый режим активирован. Чтобы выйти - нажмите \"Деактивировать\"\n";
+                        AnalysisTextBox.Text += "Угроз не обнаружено, но мы продолжаем работать в этом направлении.";
                         this.WindowState = FormWindowState.Minimized;
 
                         //WindowState = FormWindowState.Minimized;
@@ -420,7 +425,7 @@ namespace Coursework_main
                     HackingStatiscticsRadiobutton.Enabled = false;
                     HackingStatiscticsRadiobutton.Checked = false;
 
-                    richTextBox1.Text = "";
+                    //richTextBox1.Text = "";
                     AnalysisTextBox.Text = "";
                     
                     BackgroundWatcher.makeNotify(notifyIcon1, "log VnVlyzer переведен в обычный режим");
@@ -485,14 +490,56 @@ namespace Coursework_main
 
                 SecurityAnalysisButton.Enabled = true;
 
-                if (backgroundWatcher.dangerousRequests.DangerousIp.Count()>0)
-                {
+                //if (backgroundWatcher.dangerousRequests.DangerousIp.Count()>0)
+                //{
 
-                    //backgroundWatcher.WriteDangerousRequest_InBackgroundMode_ToWindow(AnalysisTextBox);
-                }
+                //    //backgroundWatcher.WriteDangerousRequest_InBackgroundMode_ToWindow(AnalysisTextBox);
+                //}
 
             //notifyIcon1.Visible = ;
 
+        }
+
+        private void RequestsOutputDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void выйтиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void справкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Выберите файл и выставьте необходимые фильтры и нажмите на Поиск. Дальше Вы можете анализировать данные на попытки взлома и ввести приложение в фоновый режим. Программа разработана в рамках курсового проекта студента групы КИУКИ-17-3 Антонова Данила.", "Справки", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void ExitMenuItem_Click(object sender, EventArgs e)
+        {
+            //notifyIcon1.Visible = false;
+            backgroundWatcher.LogWatcherOFF();
+            Close();
+        }
+
+        private void справкиToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Log watcher выполняется в фоновом режиме. Вы можете закрыть приложение нажав на кнопку выхода", "Справки", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         //public void writeToAnalisisTextBox()
         //{
@@ -514,23 +561,23 @@ namespace Coursework_main
 
         //}
     }
-    public static class Prompt
-    {
-        public static string ShowDialog(string caption)
-        {
-            Form prompt = new Form();
-            prompt.Width = 400;
-            prompt.Height = 300;
-            prompt.Text = caption;
-            Label textLabel = new Label() { Left = 50, Top = 20, Text = "Введите ваш email аддрес, чтобы всегда узнавать об угрозах.\"n\"Или оставьте его пустым"};
-            TextBox inputBox = new TextBox() { Left = 50, Top = 50, Width = 200 };
-            Button confirmation = new Button() { Text = "Ok", Left = 150, Width = 100, Top = 70 };
-            confirmation.Click += (sender, e) => { prompt.Close(); };
-            prompt.Controls.Add(confirmation);
-            prompt.Controls.Add(textLabel);
-            prompt.Controls.Add(inputBox);
-            prompt.ShowDialog();
-            return inputBox.Text;
-        }
-    }
+    //public static class Prompt
+    //{
+    //    public static string ShowDialog(string caption)
+    //    {
+    //        Form prompt = new Form();
+    //        prompt.Width = 400;
+    //        prompt.Height = 300;
+    //        prompt.Text = caption;
+    //        Label textLabel = new Label() { Left = 50, Top = 20, Text = "Введите ваш email аддрес, чтобы всегда узнавать об угрозах.\"n\"Или оставьте его пустым"};
+    //        TextBox inputBox = new TextBox() { Left = 50, Top = 50, Width = 200 };
+    //        Button confirmation = new Button() { Text = "Ok", Left = 150, Width = 100, Top = 70 };
+    //        confirmation.Click += (sender, e) => { prompt.Close(); };
+    //        prompt.Controls.Add(confirmation);
+    //        prompt.Controls.Add(textLabel);
+    //        prompt.Controls.Add(inputBox);
+    //        prompt.ShowDialog();
+    //        return inputBox.Text;
+    //    }
+    //}
 }

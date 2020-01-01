@@ -69,6 +69,7 @@ namespace Coursework_main
         private void StopWatcher()
         {
             watcher.Dispose();
+            notifyIcon1.Visible = false;
         }
         private void RunWatcher()
         {

@@ -47,8 +47,9 @@ namespace Coursework_main
         //    }
         //}
 
-        public void WriteFilterRecordsToWindow(System.Windows.Forms.RichTextBox richTextBox1)
+        public void WriteFilterRecordsToWindow(System.Windows.Forms.DataGridView dgv)
         {
+            dgv.Rows.Clear();
             if (FilteredRecordsList.Any())
             {
                 int lineNumbers = 0;
@@ -56,17 +57,25 @@ namespace Coursework_main
                 {
                     //richTextBox1.Text += _record.logString + '\n';
                     lineNumbers++;
-                    richTextBox1.Text += String.Format("[{0}]    {1}\n", lineNumbers, _record.logString);
+                    //richTextBox1.Text += String.Format("[{0}]    {1}\n", lineNumbers, _record.logString);
+
+                    var index = dgv.Rows.Add();
+                    //dgv.Rows[index].Cells["NumberOfLine"].Value = index+1;
+                    dgv.Rows[index].Cells["IP"].Value = _record.ip;
+                    dgv.Rows[index].Cells["DateTime"].Value = _record.date;
+                    dgv.Rows[index].Cells["Request"].Value = _record.request;
+                    dgv.Rows[index].Cells["AnswerNumber"].Value = _record.response;
+                    dgv.Rows[index].Cells["BytesSent"].Value = _record.bytesSent;
                     //_record.WriteToConsole();
                     //Console.WriteLine("");
                 }
                 //fileInfo["Число строк"] = lineNumbers;
             }
-            else
-            {
+            //else
+            //{
 
-                richTextBox1.Text = "Filtered list is empty";
-            }
+            //    //richTextBox1.Text = "Filtered list is empty";
+            //}
 
             //fileInfo["Некорректные логи"] = wrongRecords;
         }

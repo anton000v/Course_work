@@ -85,10 +85,11 @@ namespace Coursework_main
         //        /* прочий код */
         //    }
         //}
-        public void writeFileToWindow(System.Windows.Forms.RichTextBox richTextBox1)
+        public void writeFileToWindow(System.Windows.Forms.DataGridView dgv)
         {
             try
             {
+                dgv.Rows.Clear();
                 using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
                 {
                     int lineNumbers = 0;
@@ -103,7 +104,15 @@ namespace Coursework_main
                         {
                             outputLineNumbers++;
                             OneRecord record = new OneRecord(line);
-                            richTextBox1.Text += String.Format("[{0}]    {1}\n", lineNumbers, record.logString);
+                            //richTextBox1.Text += String.Format("[{0}]    {1}\n", lineNumbers, record.logString);
+
+                            var index = dgv.Rows.Add();
+                            //dgv.Rows[index].Cells["NumberOfLine"].Value = index+1;
+                            dgv.Rows[index].Cells["IP"].Value = record.ip;
+                            dgv.Rows[index].Cells["DateTime"].Value = record.date;
+                            dgv.Rows[index].Cells["Request"].Value = record.request;
+                            dgv.Rows[index].Cells["AnswerNumber"].Value = record.response;
+                            dgv.Rows[index].Cells["BytesSent"].Value = record.bytesSent;
                             //richTextBox1.AppendText("aaa");
                         }
                         else
